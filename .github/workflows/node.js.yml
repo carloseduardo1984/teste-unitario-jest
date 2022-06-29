@@ -27,6 +27,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    #- run: npm install --save-dev jest 
+    - run: npm install --save-dev jest 
     - run: npm install --save-dev jest-html-reporter 
     - run: npm test
