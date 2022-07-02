@@ -34,3 +34,11 @@ jobs:
       # Finally, run our tests
       - name: Run the tests
         run: npm test
+        
+      - name: Generate report
+        run:  npm test
+      - name: Upload report
+        uses: actions/upload-artifact@v2
+        with:
+          name: jest-report
+          path: ./
