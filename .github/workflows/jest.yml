@@ -1,0 +1,30 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Jest
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+
+      # Install required deps for action - jest, jest-html-report
+      - name: Install Dependencies
+        run: npm install --save-dev jest jest-html-reporter 
+
+      # Finally, run our tests
+      - name: Run the tests
+        run: npm test
+        
+      - name: Generate report
+        run:  npm test
+      - name: Upload report
+        uses: actions/upload-artifact@v2
+        with:
+          name: jest-report
+          path: './test-report.html'
