@@ -4,15 +4,20 @@ teste-unitario-jest
 
 //Packages to install
 //=======================================================
+
 npm init
+
 npm install --save-dev jest 
+
 npm install --save-dev jest-html-reporter 
 
 //=======================================================
+
 Package.json setup to exec:
 > "scripts": {  "test": “jest” }, // for Jest executions
 
 //=======================================================
+
 Package.json setup to report:
 > "jest": {
    "reporters": [
@@ -21,4 +26,5 @@ Package.json setup to report:
        {   "pageTitle": "Test Report“ }
                           ]
    ] }
+   
 //=======================================================
