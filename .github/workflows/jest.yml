@@ -1,8 +1,16 @@
 name:  CI-CD 
 
 on:
-  push:
-    branches: [ main ]
+
+ # schedule:
+ # - cron: '0 */6 * * 5'  # https://crontab.guru/ #
+  
+  push:                   # EXECUÇÃO A CADA PUSH NA BRANCH MAIN
+    branches:
+     - 'main'
+      
+  workflow_dispatch:      # EXECUÇÃO MANUAL
+  
 
 jobs:
         
@@ -10,7 +18,7 @@ jobs:
     name: Build 
     runs-on: ubuntu-latest
     steps:
-        - run: echo CONSTRUINDO O SOFTWARE NO AMBIENTE DE DEV
+        - run: echo INICIAR A IMPLEMENTAÇÃO - CI 
       
   deploy-dev:
     name: Teste em DEV
@@ -38,25 +46,27 @@ jobs:
         with:
           name: jest-report
           path: './test-report.html'
-      - run: echo REALIZANDO TESTES UNITARIOS
+      - run: echo REALIZANDO TESTES UNITARIOS e SALVANDO O REPORT
       
-  testing-qa:
-    name: Mover código para QA e Testar
+  testing-qa-int:
+    name: Mover código para QA-INT e Testar (MODULO 4)
     needs: [deploy-dev]
     runs-on: ubuntu-latest
     steps:
-      - run: echo MOVENDO E TESTES DE INTEGRACAO EM AMBIENTE QA
+      - run: echo MOVENDO E TESTES DE INTEGRACAO EM AMBIENTE QA-INT
         
-  deploy-stage:
-    name: Mover para STAGE
-    needs: [testing-qa]
+  deploy-qa-system:
+    name: Mover para QA-SYSTEM e Testar (MODULO 5)
+    needs: [testing-qa-int]
     runs-on: ubuntu-latest
     steps:
-      - run: echo MOVENDO PARA AMBIENTE DE PRE-PRODUCAO
+      - run: echo MOVENDO E TESTES DE SYSTEMA EM AMBIENTE QA-SYSTEM
       
-  deploy-production:
-    name: Lançar software em Produção
-    needs: [deploy-stage]
+  deploy-pre-production:
+    name: Disponibilizar a solução em Pré-produção
+    needs: [deploy-qa-system]
     runs-on: ubuntu-latest
     steps:
-      - run: echo LANCAMENTO DO SOFTWARE
+      - run: echo FINALIZAR O DEPLOYMENT - CD
+      
+ 
